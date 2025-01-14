@@ -1,8 +1,24 @@
 from rest_framework import serializers
-from Api.models import Movie
+from Api.models import Movie , StreamPlatform
+
+class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Movie
+        fields = "__all__"
+        
+        
+    def validate_description(self , value):
+        if len(value) < 10:
+            raise serializers.ValidationError('no the good len')
+        return value
 
 
-class MovieSerializer(serializers.Serializer):
+class StreamPlatformSerializer( serializers.ModelSerializer):
+    class Meta:
+        model= StreamPlatform
+        fields= "__all__"
+
+''' class MovieSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only = True)
     name = serializers.CharField()
     description = serializers.CharField()
@@ -18,3 +34,9 @@ class MovieSerializer(serializers.Serializer):
         instance.active = validated_data.get('active' , instance.active)
         instance.save
         return instance
+    
+    def validate_description(self , value):
+        if len(value) < 10:
+            raise serializers.ValidationError('no the good len')
+        return value
+         '''
