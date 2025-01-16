@@ -1,1 +1,3 @@
-# Api-python-Course
+# Api-python
+
+pip install djangorestframework-simplejwt
