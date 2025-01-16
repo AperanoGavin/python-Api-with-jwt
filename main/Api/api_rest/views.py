@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status 
+from rest_framework.permissions import  IsAuthenticated
 from rest_framework.views import APIView
 from Api.models import Movie , StreamPlatform
 from Api.api_rest.serializers import MovieSerializer , StreamPlatformSerializer
@@ -35,6 +36,8 @@ class StreamPlateformDetails(APIView):
             return Response(serializer.data , status=status.HTTP_200_OK)
         return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
 class MovieList(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self , request ):
         movies = Movie.objects.all()
         serializer = MovieSerializer(movies , many=True)
@@ -42,6 +45,7 @@ class MovieList(APIView):
 
 
 class MovieDetails(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self , request , pk):
         movie = Movie.objects.get(pk=pk)
         serializer= MovieSerializer(movie )
